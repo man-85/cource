@@ -32,7 +32,7 @@ export default {
       type: String
     },
     baseCurrency: {
-      type: String
+      type: String,
     },
     sortOptions: {
       type: Array,

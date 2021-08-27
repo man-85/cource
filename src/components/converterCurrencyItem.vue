@@ -4,7 +4,7 @@
       <h5 class="card-title">{{currencyName}}</h5>
       <div class="row">
         <div class="col-md-6"><my-select v-model="modelValue" :options="options" @change="changeOption"/></div>
-        <div class="col-md-6"><input v-model="convertCount" @input="inputCount" class="cource" type="text" :readonly="isReadOnly" :disabled="isReadOnly" /></div>
+        <div class="col-md-6"><input v-model="convertCount" @input="inputCount" class="cource" type="number" min="0.00" step="0.01" :readonly="isReadOnly" :disabled="isReadOnly" /></div>
       </div>
     </div>
   </div>
@@ -20,26 +20,30 @@ export default {
     MySelect,
   },
   props: {
-    modelValue: String,
-    convertCount: Number,
+    modelValue: {
+      type: String,
+    },
+    convertCount: {
+      type: String,
+    },
     options: {
-      type: Array,
+      type: Object,
       default: () => []
     },
     isReadOnly: Boolean,
   },
   data() {
     return {
-      currencyName:""
+      currencyName:"",
     }
   },
   methods: {
     changeOption(event) {
       this.$emit('update:modelValue', event.target.value);
-      this.$emit('setCurrencyCharCode', event.target.options[event.target.options.selectedIndex].text);
+      this.$emit('setCurrency', event.target.options[event.target.options.selectedIndex].text);
     },
     inputCount(event) {
-      this.$emit('setConvertCount', event.target.value);
+      this.$emit('setCount', event.target.value);
     }
   },
    watch: {

@@ -17,7 +17,7 @@ export default {
   props: {
     modelValue: String,
     options: {
-      type: Array,
+      type: Object,
       default: () => []
     },
   },
