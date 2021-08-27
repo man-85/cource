@@ -59,11 +59,11 @@
       aria-labelledby="nav-tab-2"
     >
       <div id="converter" class="row">
-        <converter-currency-item v-model="convertFrom" :options="currencies" @setConvertCount="convertCurrency"/>
+        <converter-currency-item v-model="convertFrom" :options="currencies" @setConvertCount="calculateСourse" @change="recalculateСourse"/>
         <button type="button" class="btn btn-primary btn-floating" @click="changeConvertCurrency">
           <i class="fa fa-arrows-h"></i>
         </button>
-        <converter-currency-item v-model="convertTo" :convertCount="convertPrice" :options="currencies" :isReadOnly="true"/>
+        <converter-currency-item v-model="convertTo" :convertCount="convertPrice" :options="currencies" :isReadOnly="true" @change="recalculateСourse"/>
       </div>
     </div>
   </div>
@@ -111,17 +111,21 @@ export default {
     },
   },
   methods: {
-    convertCurrency(count) {
+    calculateСourse(count) {
       this.convertCount = count;
       let convertFromPrice = this.currencies[this.convertFrom].Value;
       let convertToPrice = this.currencies[this.convertTo].Value;
       this.convertPrice = ((convertFromPrice/convertToPrice)*count).toFixed(2);
     },
+    recalculateСourse(){
+      console.log(this.convertFrom);
+      this.calculateСourse(this.convertCount);
+    },
     changeConvertCurrency() {
       let currency = this.convertFrom;
       this.convertFrom = this.convertTo;
       this.convertTo = currency;
-      this.convertCurrency(this.convertCount);
+      this.calculateСourse(this.convertCount);
     },
     setQuery(text){
       this.searchQuery = text;
